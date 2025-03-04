@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration>
+
+    <!-- 공통 로그 패턴 정의 -->
+    <!-- %d{}: 로그 발생 시간 -->
+    <!-- %X{}: MDC 값 출력 -->
+    <!-- %magenta([%thread]): 실행된 스레드 이름 (컬러 포맷팅) -->
+    <!-- %highlight([%-3level]): 로그 레벨 (레벨에 따라 색상 강조) -->
+    <!-- %logger{}: 로거 이름 -->
+    <!-- %msg: 로그 메시지  [%X{requestId}]-->
+    <property name="LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) %highlight([%-3level]) %logger{5} - %msg %n"/>
+
+    <!-- Console Appender -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>${LOG_PATTERN}</Pattern>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/> <!-- 콘솔에 출력 -->
+    </root>
+
+    <logger name="org.hibernate.SQL" level="OFF" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="com.shop.controller" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="com.shop.service" level="INFO" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.springframework.web" level="OFF" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.springframework.cache" level="TRACE" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="com.zaxxer.hikari" level="OFF" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+    <logger name="org.hibernate.orm.jdbc.bind" level="OFF" additivity="false">
+        <appender-ref ref="STDOUT"/>
+    </logger>
+
+    <!-- name: 로거 이름, level: 로깅 레벨, additivity: 부모 로거에 로그를 전달할 지 여부 -->
+    <!-- <appender-ref>: 이 로거에서 사용할 appender를 참조. -->
+</configuration>
