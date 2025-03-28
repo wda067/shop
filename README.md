@@ -2,7 +2,7 @@
 
 ## 📌프로젝트 소개
 
-본 프로젝트는 상품을 주문하고 결제할 수 있는 쇼핑몰입니다.
+본 프로젝트는 상품을 주문하고 결제할 수 있는 쇼핑몰 서비스입니다.
 
 ## 📌주요 기능
 
@@ -33,7 +33,7 @@
 
 <img src="https://github.com/user-attachments/assets/9486726d-d8ad-485b-9a3f-a914bbc80c65" width="60%" height="60%" />
 
-## 기술적 고민
+## 💡기술적 고민
 - **Feign Client를 활용한 외부 API 연동**
   - 토스페이먼츠 API 호출을 효율적으로 처리하기 위해 Feign Client를 도입했습니다.
   - 🔗 [OpenFeign 적용하기 (feat. Toss Payments API)](https://velog.io/@wda067/Spring-Boot-Feign-Client-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0)
