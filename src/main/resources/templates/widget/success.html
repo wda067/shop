@@ -2,16 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8"/>
-    <link rel="icon" href="https://static.toss.im/icons/png/4x/icon-toss-logo.png"/>
-    <link rel="stylesheet" type="text/css" href="/css/style.css"/>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link href="https://static.toss.im/icons/png/4x/icon-toss-logo.png" rel="icon"/>
+    <link href="/css/style.css" rel="stylesheet" type="text/css"/>
+    <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>토스페이먼츠 샘플 프로젝트</title>
 </head>
 
 <body>
 <div class="box_section" style="width: 600px">
-    <img width="100px" src="https://static.toss.im/illusts/check-blue-spot-ending-frame.png"/>
+    <img src="https://static.toss.im/illusts/check-blue-spot-ending-frame.png" width="100px"/>
     <h2>결제를 완료했어요</h2>
 
     <div class="p-grid typography--p" style="margin-top: 50px">
@@ -24,13 +24,14 @@
     </div>
     <div class="p-grid typography--p" style="margin-top: 10px">
         <div class="p-grid-col text--left"><b>paymentKey</b></div>
-        <div class="p-grid-col text--right" id="paymentKey" th:text="${paymentKey}" style="white-space: initial; width: 250px"></div>
+        <div class="p-grid-col text--right" id="paymentKey" style="white-space: initial; width: 250px"
+             th:text="${paymentKey}"></div>
     </div>
     <div class="p-grid" style="margin-top: 30px">
         <button class="button p-grid-col5"
                 onclick="location.href='https://docs.tosspayments.com/guides/v2/payment-widget/integration';">연동 문서
         </button>
-        <button class="button p-grid-col5" onclick="window.location.href='/api/v1/payment/widget';"
+        <button class="button p-grid-col5" onclick="window.location.href='/api/payment/widget';"
                 style="background-color: #e8f3ff; color: #1b64da">초기 화면
         </button>
     </div>
@@ -53,7 +54,7 @@
     };
 
     async function confirm() {
-        const response = await fetch("/api/v1/payment/confirm", {
+        const response = await fetch("/api/payment/confirm", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -72,27 +73,27 @@
             throw {message: json.message, code: json.code};
         }
 
-        return { data: json, requestId };
+        return {data: json, requestId};
     }
 
-    async function sendEmail(requestId) {
-        await fetch("/api/v1/payment/email", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                "X-Request-Id": requestId,
-            },
-            body: JSON.stringify(request),
-        });
-    }
+    // async function sendEmail(requestId) {
+    //     await fetch("/api/payment/email", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             "X-Request-Id": requestId,
+    //         },
+    //         body: JSON.stringify(request),
+    //     });
+    // }
 
     async function processPayment() {
         try {
             const data = await confirm();
             document.getElementById("response").innerHTML = `<pre>${JSON.stringify(data, null, 4)}</pre>`;
-            await sendEmail(data.requestId);
+            // await sendEmail(data.requestId);
         } catch (err) {
-            window.location.href = `/api/v1/payment/fail?message=${err.message}&code=${err.code}`;
+            window.location.href = `/api/payment/fail?message=${err.message}&code=${err.code}`;
         }
     }
 
