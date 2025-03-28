@@ -1,6 +1,6 @@
 package com.shop.dto.response;
 
-import com.shop.domain.Member;
+import com.shop.domain.member.Member;
 import com.shop.domain.order.Order;
 import lombok.Getter;
 

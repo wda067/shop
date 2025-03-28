@@ -1,12 +1,10 @@
 package com.shop.domain.payment;
 
 import static jakarta.persistence.FetchType.LAZY;
-import static java.time.OffsetDateTime.parse;
 import static lombok.AccessLevel.PROTECTED;
 
-import com.shop.domain.Member;
+import com.shop.domain.member.Member;
 import com.shop.domain.order.Order;
-import com.shop.dto.request.PaymentRequest;
 import com.shop.dto.response.PaymentResponse;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -21,10 +19,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import java.time.LocalDateTime;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Getter

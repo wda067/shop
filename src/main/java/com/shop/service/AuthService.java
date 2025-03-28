@@ -1,6 +1,6 @@
 package com.shop.service;
 
-import com.shop.domain.Member;
+import com.shop.domain.member.Member;
 import com.shop.dto.request.LoginRequest;
 import com.shop.exception.LoginFailed;
 import com.shop.repository.member.MemberRepository;

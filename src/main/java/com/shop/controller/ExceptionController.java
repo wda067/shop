@@ -1,7 +1,7 @@
 package com.shop.controller;
 
 import com.shop.dto.response.ErrorResponse;
-import com.shop.enums.ErrorCode;
+import com.shop.exception.ErrorCode;
 import com.shop.exception.CustomException;
 import com.shop.exception.CustomFeignException;
 import org.springframework.http.HttpStatus;

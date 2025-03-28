@@ -1,6 +1,7 @@
 package com.shop.repository.member;
 
-import static com.shop.domain.QMember.member;
+
+import static com.shop.domain.member.QMember.member;
 
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
@@ -19,7 +20,6 @@ public class MemberRepositoryCustomImpl implements MemberRepositoryCustom {
 
     @Override
     public Page<MemberResponse> getList(MemberSearch request) {
-
         BooleanBuilder builder = new BooleanBuilder();
         if (request.getQuery() != null && !request.getQuery().isBlank()) {
             builder.and(member.email.like("%" + request.getQuery() + "%"));

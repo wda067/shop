@@ -8,7 +8,6 @@ import com.shop.dto.response.ProductResponse;
 import com.shop.exception.ProductAlreadyExists;
 import com.shop.exception.ProductNotFound;
 import com.shop.repository.product.ProductRepository;
-import jakarta.validation.ConstraintViolationException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.cache.annotation.CacheEvict;

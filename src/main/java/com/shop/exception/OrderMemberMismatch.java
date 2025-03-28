@@ -1,7 +1,7 @@
 package com.shop.exception;
 
 
-import static com.shop.enums.ErrorCode.ORDER_MEMBER_MISMATCH;
+import static com.shop.exception.ErrorCode.ORDER_MEMBER_MISMATCH;
 
 public class OrderMemberMismatch extends CustomException {
 

@@ -1,7 +1,7 @@
 package com.shop.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.shop.domain.Member;
+import com.shop.domain.member.Member;
 import lombok.Getter;
 
 @Getter

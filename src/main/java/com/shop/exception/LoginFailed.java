@@ -1,7 +1,7 @@
 package com.shop.exception;
 
 
-import static com.shop.enums.ErrorCode.LOGIN_FAILED;
+import static com.shop.exception.ErrorCode.LOGIN_FAILED;
 
 public class LoginFailed extends CustomException {
 

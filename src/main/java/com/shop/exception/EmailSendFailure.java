@@ -1,7 +1,7 @@
 package com.shop.exception;
 
 
-import static com.shop.enums.ErrorCode.EMAIL_SEND_FAILURE;
+import static com.shop.exception.ErrorCode.EMAIL_SEND_FAILURE;
 
 public class EmailSendFailure extends CustomException {
 

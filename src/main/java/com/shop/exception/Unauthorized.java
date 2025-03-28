@@ -1,6 +1,6 @@
 package com.shop.exception;
 
-import static com.shop.enums.ErrorCode.UNAUTHORIZED;
+import static com.shop.exception.ErrorCode.UNAUTHORIZED;
 
 public class Unauthorized extends CustomException {
 

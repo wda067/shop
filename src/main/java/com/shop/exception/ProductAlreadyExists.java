@@ -1,7 +1,7 @@
 package com.shop.exception;
 
 
-import static com.shop.enums.ErrorCode.PRODUCT_ALREADY_EXISTS;
+import static com.shop.exception.ErrorCode.PRODUCT_ALREADY_EXISTS;
 
 public class ProductAlreadyExists extends CustomException {
 

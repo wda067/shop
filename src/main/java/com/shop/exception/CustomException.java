@@ -2,7 +2,6 @@ package com.shop.exception;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.shop.enums.ErrorCode;
 import lombok.Getter;
 
 @Getter

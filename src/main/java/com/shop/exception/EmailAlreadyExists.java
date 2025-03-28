@@ -1,7 +1,7 @@
 package com.shop.exception;
 
 
-import static com.shop.enums.ErrorCode.EMAIL_ALREADY_EXISTS;
+import static com.shop.exception.ErrorCode.EMAIL_ALREADY_EXISTS;
 
 public class EmailAlreadyExists extends CustomException {
 

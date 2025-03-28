@@ -3,7 +3,7 @@ package com.shop.dto.response;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.shop.enums.ErrorCode;
+import com.shop.exception.ErrorCode;
 import java.util.List;
 import lombok.Getter;
 import org.springframework.validation.FieldError;
