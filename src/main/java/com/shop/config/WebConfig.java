@@ -14,14 +14,11 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new AuthInterceptor())
-                .addPathPatterns("/api/v*/**")
+                .addPathPatterns("/api/**")
                 .excludePathPatterns(
-                        "/api/v*/join",
-                        "/api/v*/login",
-                        "/api/v*/logout",
-                        "/api/v*/members/**",
-                        "/api/v*/product/**",
-                        //"/api/v*/payment/**",
+                        "/api/join",  //회원가입
+                        "/api/login",  //로그인
+                        "/api/product/**",
                         "/api/*.ico",
                         "/api/error");
     }
