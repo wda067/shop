@@ -1,4 +1,4 @@
-package com.firstcoupon.config.redis;
+package com.shop.config.redis;
 
 import lombok.Getter;
 import lombok.Setter;
