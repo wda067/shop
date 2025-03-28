@@ -18,6 +18,8 @@ public enum ErrorCode {
     LOGIN_FAILED("401", "이메일 또는 비밀번호가 잘못 되었습니다."),
     UNAUTHORIZED("401", "로그인 해주세요."),
     NOT_ENOUGH_STOCK("200", "재고가 부족합니다."),
+    ORDER_LOCK_FAILED("503", "상품 주문이 지연되고 있습니다. 잠시 후 다시 시도해주세요."),
+    ORDER_ERROR("500", "주문 과정에서 오류가 발생했습니다."),
     PRODUCT_NOT_FOUND("404", "존재하지 않는 상품입니다.");
 
     private final String code;
