@@ -8,6 +8,8 @@ import com.shop.dto.request.OrderRequest;
 import com.shop.dto.response.CommonResponse;
 import com.shop.dto.response.OrderResponse;
 import com.shop.exception.MemberNotFound;
+import com.shop.exception.OrderError;
+import com.shop.exception.OrderLockFailed;
 import com.shop.exception.OrderMemberMismatch;
 import com.shop.exception.OrderNotFound;
 import com.shop.exception.ProductNotFound;
@@ -16,7 +18,10 @@ import com.shop.repository.member.MemberRepository;
 import com.shop.repository.product.ProductRepository;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
+import org.redisson.api.RLock;
+import org.redisson.api.RedissonClient;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +29,15 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService {
 
+    private static final String LOCK_KEY = "order_lock";
+
     private final OrderRepository orderRepository;
     private final MemberRepository memberRepository;
     private final ProductRepository productRepository;
+    private final RedissonClient redissonClient;
 
     @Transactional
-    public synchronized void order(Long memberId, OrderRequest request) {
+    public void order(Long memberId, OrderRequest request) {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(MemberNotFound::new);
         Product product = productRepository.findById(request.getProductId())
@@ -42,6 +50,55 @@ public class OrderService {
 
         Order order = new Order(member, orderProducts);
         orderRepository.save(order);
+    }
+
+    @Transactional
+    public synchronized void orderWithSynchronized(Long memberId, OrderRequest request) {
+        Member member = memberRepository.findById(memberId)
+                .orElseThrow(MemberNotFound::new);
+        Product product = productRepository.findById(request.getProductId())
+                .orElseThrow(ProductNotFound::new);
+        product.removeStock(request.getQuantity());
+
+        OrderProduct orderProduct = new OrderProduct(product, request.getQuantity());
+        List<OrderProduct> orderProducts = new ArrayList<>();
+        orderProducts.add(orderProduct);
+
+        Order order = new Order(member, orderProducts);
+        orderRepository.save(order);
+    }
+
+    @Transactional
+    public synchronized void orderWithRedisson(Long memberId, OrderRequest request) {
+        RLock lock = redissonClient.getLock(LOCK_KEY);
+
+        try {
+            if (lock.tryLock(5, 10, TimeUnit.SECONDS)) {
+                try {
+
+                    Member member = memberRepository.findById(memberId)
+                            .orElseThrow(MemberNotFound::new);
+                    Product product = productRepository.findById(request.getProductId())
+                            .orElseThrow(ProductNotFound::new);
+                    product.removeStock(request.getQuantity());
+
+                    OrderProduct orderProduct = new OrderProduct(product, request.getQuantity());
+                    List<OrderProduct> orderProducts = new ArrayList<>();
+                    orderProducts.add(orderProduct);
+
+                    Order order = new Order(member, orderProducts);
+                    orderRepository.save(order);
+
+                } finally {
+                    lock.unlock();
+                }
+            } else {
+                throw new OrderLockFailed();
+            }
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+            throw new OrderError();
+        }
     }
 
     @Transactional
