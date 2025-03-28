@@ -1,6 +1,7 @@
 package com.shop.service;
 
-import com.shop.domain.Member;
+import com.shop.domain.member.Member;
+import com.shop.domain.member.MemberRole;
 import com.shop.dto.request.JoinRequest;
 import com.shop.dto.request.MemberSearch;
 import com.shop.dto.response.CommonResponse;
@@ -33,6 +34,7 @@ public class MemberService {
                 .email(request.getEmail())
                 .name(request.getName())
                 .password(encryptedPassword)
+                .role(MemberRole.USER)
                 .build();
 
         memberRepository.save(member);
