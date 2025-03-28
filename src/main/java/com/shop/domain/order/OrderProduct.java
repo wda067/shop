@@ -5,6 +5,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -19,7 +20,7 @@ import lombok.Setter;
 public class OrderProduct {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "orderProduct_id")
     private Long id;
 
@@ -39,7 +40,6 @@ public class OrderProduct {
         this.product = product;
         this.orderPrice = product.getPrice();
         this.quantity = quantity;
-        product.removeStock(quantity);
     }
 
     public void cancel() {
