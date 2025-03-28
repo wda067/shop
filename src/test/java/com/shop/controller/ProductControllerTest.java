@@ -54,7 +54,7 @@ class ProductControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         //when
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/product")
+        ResultActions resultActions = mockMvc.perform(post("/api/product")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andDo(print());
@@ -77,7 +77,7 @@ class ProductControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         //when
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/product")
+        ResultActions resultActions = mockMvc.perform(post("/api/product")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andDo(print());
@@ -102,7 +102,7 @@ class ProductControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         //when
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/product")
+        ResultActions resultActions = mockMvc.perform(post("/api/product")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(json))
                 .andDo(print());
@@ -130,7 +130,7 @@ class ProductControllerTest {
         productRepository.saveAll(products);
 
         //when
-        ResultActions resultActions = mockMvc.perform(get("/api/v1/product/list")
+        ResultActions resultActions = mockMvc.perform(get("/api/product/list")
                         .param("page", "1")
                         .param("size", "10")
                         .param("query", ""))
@@ -159,7 +159,7 @@ class ProductControllerTest {
         productRepository.saveAll(products);
 
         //when
-        ResultActions resultActions = mockMvc.perform(get("/api/v1/product/list")
+        ResultActions resultActions = mockMvc.perform(get("/api/product/list")
                         .param("query", "테스트 상품3"))
                 .andDo(print());
 

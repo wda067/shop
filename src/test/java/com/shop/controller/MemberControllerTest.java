@@ -9,7 +9,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.shop.domain.Member;
+import com.shop.domain.member.Member;
 import com.shop.dto.request.JoinRequest;
 import com.shop.repository.member.MemberRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -48,7 +48,7 @@ class MemberControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         //when
-        mockMvc.perform(post("/api/v1/join")
+        mockMvc.perform(post("/api/join")
                         .contentType(APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isOk())
@@ -77,7 +77,7 @@ class MemberControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         //when
-        mockMvc.perform(post("/api/v1/join")
+        mockMvc.perform(post("/api/join")
                         .contentType(APPLICATION_JSON)
                         .content(json))
                 .andExpect(status().isConflict())
@@ -97,7 +97,7 @@ class MemberControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         //when
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/join")
+        ResultActions resultActions = mockMvc.perform(post("/api/join")
                         .contentType(APPLICATION_JSON)
                         .content(json))
                 .andDo(print());
@@ -118,7 +118,7 @@ class MemberControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         //when
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/join")
+        ResultActions resultActions = mockMvc.perform(post("/api/join")
                         .contentType(APPLICATION_JSON)
                         .content(json))
                 .andDo(print());
@@ -139,7 +139,7 @@ class MemberControllerTest {
         String json = objectMapper.writeValueAsString(request);
 
         //expected
-        ResultActions resultActions = mockMvc.perform(post("/api/v1/join")
+        ResultActions resultActions = mockMvc.perform(post("/api/join")
                         .contentType(APPLICATION_JSON)
                         .content(json))
                 .andDo(print());

@@ -3,7 +3,7 @@ package com.shop.service;
 import static org.junit.jupiter.api.Assertions.*;
 
 import com.shop.config.TestSecurityConfig;
-import com.shop.domain.Member;
+import com.shop.domain.member.Member;
 import com.shop.dto.request.JoinRequest;
 import com.shop.exception.EmailAlreadyExists;
 import com.shop.repository.member.MemberRepository;
