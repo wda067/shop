@@ -1,12 +1,11 @@
 package com.shop.config.feign;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shop.exception.CustomFeignException;
 import feign.RequestTemplate;
 import feign.codec.Encoder;
 import java.lang.reflect.Type;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Slf4j
 public class CustomFeignEncoder implements Encoder {
@@ -21,7 +20,7 @@ public class CustomFeignEncoder implements Encoder {
             template.body(jsonBody.getBytes(), template.requestCharset());
         } catch (Exception e) {
             log.error("[Feign Encoder] Encoding error: ", e);
-            throw new RuntimeException(e);
+            throw new CustomFeignException("400", e.getMessage());
         }
     }
 }

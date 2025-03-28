@@ -1,8 +1,10 @@
 package com.shop.config.feign;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.shop.exception.CustomFeignException;
 import feign.Response;
 import feign.codec.Decoder;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Type;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +25,9 @@ public class CustomFeignDecoder implements Decoder {
             Object result = objectMapper.readValue(inputStream, objectMapper.constructType(type));
             log.info("[Feign Decoder] Decoded Response: {}", result);
             return result;
-        } catch (Exception e) {
+        } catch (IOException e) {
             log.error("[Feign Decoder] Decoding error: ", e);
-            throw new RuntimeException(e);
+            throw new CustomFeignException(String.valueOf(response.status()), e.getMessage());
         }
     }
 }
