@@ -1,22 +1,23 @@
 package com.shop.service;
 
-import static java.nio.charset.StandardCharsets.UTF_8;
-
-import com.shop.domain.Member;
+import com.shop.client.TossPaymentsClient;
+import com.shop.domain.member.Member;
 import com.shop.domain.order.Order;
 import com.shop.domain.payment.Payment;
-import com.shop.domain.payment.TossPaymentsClient;
 import com.shop.dto.request.PaymentRequest;
 import com.shop.dto.response.CommonResponse;
 import com.shop.dto.response.OrderPaymentInfo;
 import com.shop.dto.response.PaymentResponse;
+import com.shop.event.OrderCompletedEvent;
 import com.shop.exception.OrderNotFound;
 import com.shop.repository.OrderRepository;
 import com.shop.repository.PaymentRepository;
 import java.util.Base64;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,12 +25,12 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class PaymentService {
 
+    private static final Logger orderLogger = LoggerFactory.getLogger("OrderLogger");
+
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
     private final TossPaymentsClient tossPaymentsClient;
-
-    @Value("${toss-payments.widget-secret}")
-    private String widgetSecretKey;
+    private final ApplicationEventPublisher eventPublisher;
 
     public OrderPaymentInfo getOrderPaymentInfo(Long orderId) {
         Order order = orderRepository.findById(orderId)
@@ -42,13 +43,16 @@ public class PaymentService {
 
     @Transactional
     public CommonResponse<PaymentResponse> confirmPayment(PaymentRequest request) {
-        PaymentResponse response = tossPaymentsClient.confirmPayment(getAuthHeader(), request);
+        PaymentResponse response = tossPaymentsClient.confirmPayment(request);
         Order order = orderRepository.findById(decodeOrderId(response))
                 .orElseThrow(OrderNotFound::new);
 
         Payment payment = new Payment(response, order);
         paymentRepository.save(payment);
 
+        //주문 완료 이벤트 발행
+        eventPublisher.publishEvent(new OrderCompletedEvent(order.getMember(), order));
+        orderLogger.info("주문 완료");
         return CommonResponse.success(response);
     }
 
@@ -57,11 +61,6 @@ public class PaymentService {
         byte[] decode = Base64.getDecoder().decode(cleaned);
         String rawOrderId = new String(decode);
         return Long.parseLong(rawOrderId);
-    }
-
-    private String getAuthHeader() {
-        byte[] bytes = (widgetSecretKey + ":").getBytes(UTF_8);
-        return "Basic " + Base64.getEncoder().encodeToString(bytes);
     }
 
     @Transactional
