@@ -37,8 +37,8 @@
 - **Feign Client를 활용한 외부 API 연동**
   - 토스페이먼츠 API 호출을 효율적으로 처리하기 위해 Feign Client를 도입했습니다.
   - 🔗 [OpenFeign 적용하기 (feat. Toss Payments API)](https://velog.io/@wda067/Spring-Boot-Feign-Client-%EC%A0%81%EC%9A%A9%ED%95%98%EA%B8%B0)
-- **비동기 처리를 통한 성능 최적화**
-  - 주문 처리 속도를 개선하기 위해 Spring Boot의 @Async를 활용해 비동기 처리를 적용했습니다. 
+- **Spring Event와 비동기 처리를 통한 성능 최적화**
+  - 주문 처리 속도를 개선하기 위해 `@EventListener`와 `@Async`를 활용해 이메일 전송을 비동기적으로 처리하며 시스템 결합도를 낮췄습니다.
   - 🔗 [@Async를 활용한 이메일 전송 비동기 처리](https://velog.io/@wda067/Spring-Boot-Async%EB%A5%BC-%ED%99%9C%EC%9A%A9%ED%95%9C-%EB%B9%84%EB%8F%99%EA%B8%B0-%EC%B2%98%EB%A6%AC)
 - **MDC로 주문 추적 및 비동기 로그 관리**
   - 비동기 환경에서 로그를 효과적으로 추적하기 위해 MDC(Mapped Diagnostic Context)를 사용했습니다.
