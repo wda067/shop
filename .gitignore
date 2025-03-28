@@ -83,3 +83,4 @@ node_modules
 /http/
 /src/main/java/com/shop/DataInitializer.java
 /docker-compose-local.yml
+/src/main/java/com/shop/batch/

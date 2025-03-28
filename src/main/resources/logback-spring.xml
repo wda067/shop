@@ -1,26 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <configuration>
 
-    <!-- 공통 로그 패턴 정의 -->
-    <!-- %d{}: 로그 발생 시간 -->
-    <!-- %X{}: MDC 값 출력 -->
-    <!-- %magenta([%thread]): 실행된 스레드 이름 (컬러 포맷팅) -->
-    <!-- %highlight([%-3level]): 로그 레벨 (레벨에 따라 색상 강조) -->
-    <!-- %logger{}: 로거 이름 -->
-    <!-- %msg: 로그 메시지  [%X{requestId}]-->
     <property name="LOG_PATTERN"
-              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) %highlight([%-3level]) %logger{5} - %msg %n"/>
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) %highlight([%-3level]) %logger{5} - %msg%n"/>
 
-    <!-- Console Appender -->
+    <property name="ORDER_LOG_PATTERN"
+              value="%d{yyyy-MM-dd HH:mm:ss.SSS} %magenta([%thread]) %highlight([%-3level]) %logger{5} - [%X{orderId}] %msg%n"/>
+
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <Pattern>${LOG_PATTERN}</Pattern>
         </encoder>
     </appender>
 
+    <appender name="ORDER_STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <Pattern>${ORDER_LOG_PATTERN}</Pattern>
+        </encoder>
+    </appender>
+
     <root level="INFO">
-        <appender-ref ref="STDOUT"/> <!-- 콘솔에 출력 -->
+        <appender-ref ref="STDOUT"/>
     </root>
+
+    <logger name="OrderLogger" level="INFO" additivity="false">
+        <appender-ref ref="ORDER_STDOUT"/>
+    </logger>
 
     <logger name="org.hibernate.SQL" level="OFF" additivity="false">
         <appender-ref ref="STDOUT"/>
@@ -43,6 +49,9 @@
     <logger name="org.hibernate.orm.jdbc.bind" level="OFF" additivity="false">
         <appender-ref ref="STDOUT"/>
     </logger>
+
+    <logger name="org.apache.kafka" level="OFF" additivity="false"/>
+    <logger name="org.springframework.kafka" level="OFF" additivity="false"/>
 
     <!-- name: 로거 이름, level: 로깅 레벨, additivity: 부모 로거에 로그를 전달할 지 여부 -->
     <!-- <appender-ref>: 이 로거에서 사용할 appender를 참조. -->
