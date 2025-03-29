@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
-import org.thymeleaf.TemplateEngine;
 
 @Service
 @RequiredArgsConstructor
@@ -18,7 +17,6 @@ public class EmailService {
     private static final Logger orderLogger = LoggerFactory.getLogger("OrderLogger");
 
     private final JavaMailSender mailSender;
-    private final TemplateEngine templateEngine;
 
 
     //이메일 전송은 네트워크 I/O 작업으로 시간이 걸릴 수 있으므로 비동기로 처리하는 것이 좋다.
@@ -37,13 +35,4 @@ public class EmailService {
             throw new EmailSendFailure();
         }
     }
-
-    //private String generateEmailContent(PaymentRequest request) {
-    //    Context context = new Context();
-    //    context.setVariable("orderId", request.getOrderId());
-    //    long amount = Long.parseLong(request.getAmount());
-    //    String formattedAmount = NumberFormat.getInstance(Locale.KOREA).format(amount);
-    //    context.setVariable("amount", formattedAmount);
-    //    return templateEngine.process("payment-complete-email", context);
-    //}
 }
