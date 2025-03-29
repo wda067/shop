@@ -31,7 +31,7 @@
         <button class="button p-grid-col5"
                 onclick="location.href='https://docs.tosspayments.com/guides/v2/payment-widget/integration';">연동 문서
         </button>
-        <button class="button p-grid-col5" onclick="window.location.href='/api/payment/widget';"
+        <button class="button p-grid-col5" onclick="window.location.href='/payment/widget';"
                 style="background-color: #e8f3ff; color: #1b64da">초기 화면
         </button>
     </div>
@@ -54,7 +54,7 @@
     };
 
     async function confirm() {
-        const response = await fetch("/api/payment/confirm", {
+        const response = await fetch("/payment/confirm", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -93,7 +93,7 @@
             document.getElementById("response").innerHTML = `<pre>${JSON.stringify(data, null, 4)}</pre>`;
             // await sendEmail(data.requestId);
         } catch (err) {
-            window.location.href = `/api/payment/fail?message=${err.message}&code=${err.code}`;
+            window.location.href = `/payment/fail?message=${err.message}&code=${err.code}`;
         }
     }
 

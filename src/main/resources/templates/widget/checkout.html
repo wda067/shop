@@ -114,8 +114,8 @@
             await widgets.requestPayment({
                 orderId: encodeToBase64(orderInfo.orderId),
                 orderName: orderInfo.orderName,
-                successUrl: window.location.origin + "/api/payment/success",
-                failUrl: window.location.origin + "/api/payment/fail",
+                successUrl: window.location.origin + "/payment/success",
+                failUrl: window.location.origin + "/payment/fail",
                 customerEmail: orderInfo.customerEmail,
                 customerName: orderInfo.customerName,
                 // 가상계좌 안내, 퀵계좌이체 휴대폰 번호 자동 완성에 사용되는 값입니다. 필요하다면 주석을 해제해 주세요.
