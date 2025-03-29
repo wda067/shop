@@ -31,7 +31,7 @@
 
 ## 🏗️시스템 아키텍처
 
-<img src="https://github.com/user-attachments/assets/9486726d-d8ad-485b-9a3f-a914bbc80c65" width="60%" height="60%" />
+<img src="https://github.com/user-attachments/assets/f7b1a938-7989-4ec1-b885-6e2b2a836f19" width="60%" height="60%" />
 
 ## 💡기술적 고민
 - **Feign Client를 활용한 외부 API 연동**
