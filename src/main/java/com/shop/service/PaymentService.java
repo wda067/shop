@@ -9,6 +9,7 @@ import com.shop.dto.response.CommonResponse;
 import com.shop.dto.response.OrderPaymentInfo;
 import com.shop.dto.response.PaymentResponse;
 import com.shop.event.OrderCompletedEvent;
+import com.shop.event.OrderEventPublisher;
 import com.shop.exception.OrderNotFound;
 import com.shop.repository.OrderRepository;
 import com.shop.repository.PaymentRepository;
@@ -30,7 +31,7 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final OrderRepository orderRepository;
     private final TossPaymentsClient tossPaymentsClient;
-    private final ApplicationEventPublisher eventPublisher;
+    private final OrderEventPublisher orderEventPublisher;
 
     public OrderPaymentInfo getOrderPaymentInfo(Long orderId) {
         Order order = orderRepository.findById(orderId)
@@ -43,6 +44,7 @@ public class PaymentService {
 
     @Transactional
     public CommonResponse<PaymentResponse> confirmPayment(PaymentRequest request) {
+        orderLogger.info("결제 승인 요청");
         PaymentResponse response = tossPaymentsClient.confirmPayment(request);
         Order order = orderRepository.findById(decodeOrderId(response))
                 .orElseThrow(OrderNotFound::new);
@@ -51,7 +53,7 @@ public class PaymentService {
         paymentRepository.save(payment);
 
         //주문 완료 이벤트 발행
-        eventPublisher.publishEvent(new OrderCompletedEvent(order.getMember(), order));
+        orderEventPublisher.publishOrderCompleted(order);
         orderLogger.info("주문 완료");
         return CommonResponse.success(response);
     }
