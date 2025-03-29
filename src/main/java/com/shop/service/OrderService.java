@@ -22,6 +22,8 @@ import java.util.concurrent.TimeUnit;
 import lombok.RequiredArgsConstructor;
 import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -29,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class OrderService {
 
+    private static final Logger orderLogger = LoggerFactory.getLogger("OrderLogger");
     private static final String LOCK_KEY = "order_lock";
 
     private final OrderRepository orderRepository;
@@ -50,6 +53,7 @@ public class OrderService {
 
         Order order = new Order(member, orderProducts);
         orderRepository.save(order);
+        orderLogger.info("주문 성공");
     }
 
     @Transactional
