@@ -1,5 +1,6 @@
 package com.shop.config;
 
+import com.shop.config.mdc.MdcTaskDecorator;
 import java.util.concurrent.Executor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
@@ -23,17 +24,4 @@ public class AsyncConfig implements AsyncConfigurer {
         executor.initialize();
         return executor;
     }
-
-    //@Override
-    //public AsyncUncaughtExceptionHandler getAsyncUncaughtExceptionHandler() {
-    //    return (ex, method, params) -> {
-    //        log.error("비동기 실행 중 예외 발생: 메서드={}, 예외={}, 코드={}, 메시지={}",
-    //                method.getName(),
-    //                ex.getClass().getSimpleName(),
-    //                (ex instanceof CustomException) ? ((CustomException) ex).getErrorCode().getCode() : "N/A",
-    //                (ex instanceof CustomException) ? ((CustomException) ex).getErrorCode().getMessage()
-    //                        : ex.getMessage()
-    //        );
-    //    };
-    //}
 }
