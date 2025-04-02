@@ -2,7 +2,6 @@ package com.shop.event;
 
 import com.shop.exception.EmailSendFailure;
 import com.shop.service.EmailService;
-import com.shop.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,7 +16,6 @@ public class OrderCompletedEventListener {
     private static final Logger orderLogger = LoggerFactory.getLogger("OrderLogger");
 
     private final EmailService emailService;
-    private final OrderService orderService;
 
     @Async("emailTaskExecutor")
     @TransactionalEventListener
@@ -26,7 +24,6 @@ public class OrderCompletedEventListener {
             emailService.sendOrderConfirmation(event.getEmail(), event.getOrderName());
         } catch (EmailSendFailure e) {
             orderLogger.error("code: {}, message: {}", e.getErrorCode().getCode(), e.getErrorCode().getMessage());
-            orderService.cancel(event.getMemberId(), event.getOrderId());
         }
     }
 }
