@@ -18,7 +18,6 @@ public class EmailService {
 
     private final JavaMailSender mailSender;
 
-
     //이메일 전송은 네트워크 I/O 작업으로 시간이 걸릴 수 있으므로 비동기로 처리하는 것이 좋다.
     public void sendOrderConfirmation(String email, String orderName) {
         try {
